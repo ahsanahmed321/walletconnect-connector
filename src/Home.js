@@ -22,17 +22,23 @@ export default function Home() {
   };
 
   const killWalletSession = () => {
-    console.log("connector", connector);
+    console.log(context.active)
+    if(context.active){
     connector.close();
+    }
   };
 
   const deactivateWallet = () => {
+    console.log("Current context", context);
+    if(context.active){
     deactivate();
+    }
   };
 
   return (
     <div>
-      <h1>Hello</h1>
+      <h1>{context.account}</h1>
+  <h1>{context.chainId}</h1>
       <button onClick={connectWalletButton}> Hi</button>
       <button onClick={deactivateWallet}>please mujhe chordo</button>
       <button onClick={killWalletSession}>ahhhh</button>
