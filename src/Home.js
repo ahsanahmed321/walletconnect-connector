@@ -1,27 +1,41 @@
 import React from "react";
 
-import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
-import { useWeb3React } from '@web3-react/core'
-export default function Home() {
+import { useWeb3React } from "@web3-react/core";
+import { walletconnect } from "./Connectors";
 
-  const walletconnect = new WalletConnectConnector({
-    rpc: { 4: "https://kovan.infura.io/v3/98ae0677533f424ca639d5abb8ead4e7" },
-    bridge: "https://bridge.walletconnect.org",
-    qrcode: true,
-    pollingInterval: 12000,
-  });
-  
-    const web3React = useWeb3React()
-    console.log(web3React)
-    web3React.activate(walletconnect)
-  
-  
+export default function Home() {
+  const context = useWeb3React();
+  const {
+    connector,
+    library,
+    chainId,
+    account,
+    activate,
+    deactivate,
+    active,
+    error,
+  } = context;
+
+  const connectWalletButton = () => {
+    activate(walletconnect);
+    console.log("Current context", context);
+  };
+
+  const killWalletSession = () => {
+    console.log("connector", connector);
+    connector.close();
+  };
+
+  const deactivateWallet = () => {
+    deactivate();
+  };
 
   return (
     <div>
-      
       <h1>Hello</h1>
-      <button>Hi</button>
+      <button onClick={connectWalletButton}> Hi</button>
+      <button onClick={deactivateWallet}>please mujhe chordo</button>
+      <button onClick={killWalletSession}>ahhhh</button>
     </div>
   );
 }
